@@ -35,6 +35,8 @@ Below are the parameters that can be set:
 - `--head-config`    In the `head_config` folder, different tasks' inducing heads' JSON configurations are provided.
 - `--alpha`: Contrast factor
 
+Here are the dataset links for evaluation:  [HellaSwag Dataset](https://huggingface.co/datasets/Rowan/hellaswag) ,[RACE Dataset](https://huggingface.co/datasets/ehovy/race) , [OpenBookQA Dataset](https://huggingface.co/datasets/allenai/openbookqa) ,[Summarization Data](https://github.com/RUCAIBox/HaluEval/blob/main/data/summarization_data.json) ,[TruthfulQA Dataset](https://huggingface.co/datasets/truthfulqa/truthful_qa/viewer/multiple_choice) , [Factor Dataset](https://github.com/AI21Labs/factor/tree/main/data)
+
 **Getting inducing heads config**
 
 If you want to retrieve the inducing heads' JSON by yourself, you can implement it based on the lm-evaluation-harness project.

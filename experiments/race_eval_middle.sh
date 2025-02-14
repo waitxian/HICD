@@ -11,7 +11,7 @@ cp race_eval_middle.sh $OUTPUT_DIR/run.sh
 cd ..
 
 python -u race_eval.py \
-    --model-name /root/models/Llama-7b \
+    --model-name /path/models/Llama-7b \
     --output-path experiments/$OUTPUT_DIR/output.json \
     --file_path ./head_config/race_top_middle_30.json\
     --subset_name $SUBSET \

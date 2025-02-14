@@ -10,8 +10,8 @@ cp factor_eval.sh $OUTPUT_DIR/run.sh
 cd ..
 
 python -u factor_eval.py \
-    --model-name /root/models/Llama-7b \
-    --data-path /root/dataset/$DATASET.csv \
+    --model-name /path/models/Llama-7b \
+    --data-path /path/dataset/$DATASET.csv \
     --output-path experiments/$OUTPUT_DIR/output.json \
     --file_path ./head_config/factor_top_70_10.json \
     --alpha 0.38 \

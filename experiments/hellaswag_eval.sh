@@ -10,8 +10,8 @@ cp hellaswag_eval.sh $OUTPUT_DIR/run.sh
 cd ..
 
 python -u hellaswag_eval.py \
-    --model-name /root/models/Llama-7b\
-    --data-path /root/dataset/hellaswag \
+    --model-name /path/models/Llama-7b\
+    --data-path /path/dataset/hellaswag \
     --output-path experiments/$OUTPUT_DIR/output.json \
     --file_path /root/HICD/head_config/hellaswag_top_30.json \
     --flag $FLAG \

@@ -11,7 +11,7 @@ cp race_eval_high.sh $OUTPUT_DIR/run.sh
 cd ..
 
 python -u race_eval.py \
-    --model-name /root/models/llama-7b \
+    --model-name /path/models/llama-7b \
     --output-path experiments/$OUTPUT_DIR/output.json \
     --file_path ./head_config/race_top_high_70.json\
     --subset_name $SUBSET \
