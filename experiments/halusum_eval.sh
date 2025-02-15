@@ -17,7 +17,7 @@ python -u halusum_eval.py \
     --num-gpus 1 \
     --file_path ./head_config/halusum_top_30.json \
     --flag $FLAG\
-    --alpha 1.3 \
+    --alpha 2 \
 
 cd experiments
 }
