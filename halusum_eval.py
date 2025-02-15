@@ -219,7 +219,7 @@ if __name__ == "__main__":
         for idx in tqdm(range(len(list_data_dict[j]))):
             sample = list_data_dict[j][idx]
 
-            toekn_ranges=None
+            token_ranges=None
             if args.token_ranges:
                 token_ranges =token_ranges_all[idx]
 
