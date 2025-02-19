@@ -17,7 +17,7 @@ cd experiments
 
 **HICD**
 
-To run the evaluation for a specific task, execute the `[task]_eval.sh` script ,like:
+To run the evaluation for a specific task, execute the `[task]_eval.sh` script , like:
 
 ```
 bash hellaswag_eval.sh
@@ -47,10 +47,10 @@ cd lm-evaluation-harness
 git checkout 11fa0bf4394998634e6c6e0c9fc2fc8211415042
 ```
 
-Then, replace or add the contents in the `models` and `tasks` folders from the `lm_eval` folder of the HICD project into the corresponding `models` and `tasks` folders in `lm-evaluation-harness/lm_eval`. Afterward, replace the contents of `lm_eval/base.py`, `lm_eval/evaluator.py`, and `lm_eval/utils.py` with the corresponding implementations. Once these changes are made, you can run the code to obtain the `0shot_hellaswag_ac.pkl` file.
+Then, replace or add the contents in the `models` and `tasks` folders from the `lm_eval` folder of the HICD project into the corresponding `models` and `tasks` folders in `lm-evaluation-harness/lm_eval`. Afterward, replace the contents of `lm_eval/base.py`, `lm_eval/evaluator.py` and `lm_eval/utils.py` with the corresponding implementations. Replace `lm-evaluation-harness/main.py` with `HICD/lm_eval/main.py`  .Once these changes are made, you can run the code to obtain the `0shot_hellaswag_ac.pkl` file.
 
 ```
-python main.py --model llama  --model_args pretrained=/path/models/Llama-7b  --tasks hellaswag --head_importance_calc --save_importance_path logs/head_importance/llama7b/0shot_hellaswag_ac.pkl --num_fewshot 0
+python main.py --model llama  --model_args pretrained=/path/models/Llama-7b  --tasks hellaswag --head_importance_calc --save_importance_path path/to/0shot_hellaswag_ac.pkl --num_fewshot 0
 ```
 
 By setting `adv=True` in `tasks/hellaswag.py`, you can regenerate the erroneous samples and rerun the process to obtain the `0shot_hellaswag_ac.pkl` file.Similar implementations for constructing erroneous samples can be applied to other tasks as well.
@@ -59,10 +59,10 @@ By setting `adv=True` in `tasks/hellaswag.py`, you can regenerate the erroneous 
 python main.py --model llama  --model_args pretrained=/path/models/Llama-7b  --tasks hellaswag --head_importance_calc --save_importance_path logs/head_importance/llama7b/0shot_hellaswag_ad.pkl --num_fewshot 0
 ```
 
-You can then run `lm_eval/scripts/get_inducing_heads.py` to obtain the inducing heads configuration.
+You can then run `HICD/lm_eval/scripts/get_inducing_heads.py` to obtain the inducing heads configuration.We provide the .pkl  file in `HICD/head_importance/`.
 
 ```
-python get_inducing_heads.py --saved_head_importance_path_ac /path/to/0shot_hellaswag_ac.pkl --saved_head_importance_path_ac /path/to/0shot_hellaswag_ad.pkl --save_file_path /path/head_config/hellaswag_top_30.json
+python get_inducing_heads.py --saved_head_importance_path_ac /path/to/0shot_hellaswag_ac.pkl --saved_head_importance_path_ad /path/to/0shot_hellaswag_ad.pkl --save_file_path /path/head_config/hellaswag_top_30.json
 ```
 
 **Other experiments implementation**

@@ -1,7 +1,7 @@
 function run(){
 RUN_NAME=alpha${ALPHA}
 DATASET=summarization
-MODEL=LLaMA_hf_7B # LLaMA2_hf_7B 
+MODEL=LLaMA_hf_7B # LLaMA2_hf_7B  1
 FLAG=ave
 OUTPUT_DIR=$FLAG/HaluEval-$DATASET/$MODEL
 
