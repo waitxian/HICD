@@ -25,6 +25,7 @@ from evaluation.utils.typing import (
     TokenizerOffsetMapping,
 )
 
+
 class ModelAndTokenizer:
     def __init__(self, model, tokenizer):
         self.model = model
@@ -67,17 +68,19 @@ def inputs_from_batch(
         inputs = inputs.to(device)
     return inputs
     
-def hicd_config(model,tokenizer,prompts,head_config,token_ranges=None,scale=0.01,scale_position="include",max_length=2048,task='hellaswag',flag='None'):
+def hicd_config(model,tokenizer,prompts,head_config,token_ranges=[],scale=0.01,scale_position="include",max_length=2048,task='hellaswag',flag='None'):
     mt = ModelAndTokenizer(model=model, tokenizer=tokenizer)
 
     hicd_head_config=head_config
-    head_config = read_head_config(hicd_head_config[0])
-   
+    if hicd_head_config[0]==None:
+        head_config = None
+    else:
+        head_config = read_head_config(hicd_head_config[0])
+    
     if hicd_head_config[1]==None:
         head_config_inner =None
     else:
         head_config_inner =read_head_config(hicd_head_config[1])
-    
     mt.tokenizer.pad_token =mt.tokenizer.eos_token
     with models.set_padding_side(mt.tokenizer, padding_side="left"):
                 inputs =inputs_from_batch(mt, prompts, device='cuda')
@@ -87,11 +90,11 @@ def hicd_config(model,tokenizer,prompts,head_config,token_ranges=None,scale=0.01
     
     num_layers = model.config.num_hidden_layers  
     num_heads = model.config.num_attention_heads  
-    head_mask = torch.ones((num_layers, num_heads), device=input_ids.device)
-    indices = induce_heads(head_config, num_heads, head_mask)
-    head_mask.view(-1)[indices] = 0.
-    head_mask = head_mask.view(num_layers, num_heads).contiguous()
-
+    if head_config:
+        head_mask = torch.ones((num_layers, num_heads), device=input_ids.device)
+        indices = induce_heads(head_config, num_heads, head_mask)
+        head_mask.view(-1)[indices] = 0.
+        head_mask = head_mask.view(num_layers, num_heads).contiguous()
     if task=='halusum':
         max_new_tokens=max_length-inputs["input_ids"].shape[-1]
         generate_kwargs = dict(
@@ -103,11 +106,13 @@ def hicd_config(model,tokenizer,prompts,head_config,token_ranges=None,scale=0.01
                             pad_token_id=tokenizer.eos_token_id,
                         )
     prompts=[prompts]
-   
-    if head_config_inner ==None and task!='halusum':
-        outputs = model(input_ids=input_ids, head_mask=head_mask,flag=flag)
-    elif head_config_inner ==None and task =='halusum':
-        outputs = model.generate(input_ids=input_ids, head_mask=head_mask,flag=flag,**generate_kwargs)
+    if head_config==None and head_config_inner ==None:
+        raise ValueError("At least one of head_config or head_config_inner must be specified.")
+    elif head_config!=None and head_config_inner ==None :
+        if task!='halusum':
+            outputs = model(input_ids=input_ids, head_mask=head_mask,flag=flag)
+        else:
+            outputs = model.generate(input_ids=input_ids, head_mask=head_mask,flag=flag,**generate_kwargs)
     else:
         pasta_steerer = pastamodel.PASTA_induce(
                 mt.model, 
@@ -117,7 +122,7 @@ def hicd_config(model,tokenizer,prompts,head_config,token_ranges=None,scale=0.01
                 scale_position=scale_position,
             )
 
-        if pasta_steerer is not None and token_ranges!=None:
+        if pasta_steerer is not None and token_ranges!=[]:
             with pasta_steerer.apply_steering(
                         model=model, 
                         strings=prompts, 
@@ -125,6 +130,7 @@ def hicd_config(model,tokenizer,prompts,head_config,token_ranges=None,scale=0.01
                         model_input=inputs, 
                     ) as steered_model: 
                         if task =='hellaswag' or task == 'race' or task == 'truthfulqa' or task=='openbookqa' or task=='factor':
+                            
                             if head_config!=None:
                                 outputs = steered_model(input_ids=inputs["input_ids"],head_mask=head_mask,flag=flag)
                             else:

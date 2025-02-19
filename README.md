@@ -69,17 +69,21 @@ python get_inducing_heads.py --saved_head_importance_path_ac /path/to/0shot_hell
 
 * PASTA-based
 
- `--file_path_inner`: Specify the heads for attention steering. We directly use inducing heads to compare with the HICD method.
-
 `--token_ranges`: Determine the token positions where attention needs to be changed. You can run `[task]_keys.sh` to obtain the corresponding `token.json` file for the task.
 
-`--scale`: Scaling factor that determines the extent of the attention change.
+ `--file_path_inner`: Specify the heads for attention steering. We directly use HICD's inducing heads to compare with the HICD method.
+
+`--scale`: [optional] Scaling factor that determines the extent of the attention change. 
+
+You can add these parameters and delete `--file_path`  in the `[task]_eval.sh` file to specify and run the task
 
 * SH2-based
 
  `--pondering`: Specify as "hard". 
 
  `--keys-path`: Configuration file for low-information words. You can run `[task]_keys.sh` to obtain the corresponding `key.json` file for the task.
+
+You can add these parameters in the `[task]_eval.sh` file to specify and run the task.
 
 
 
