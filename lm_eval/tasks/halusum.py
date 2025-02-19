@@ -36,7 +36,7 @@ def truncate_message(prompt1, prompt2, tokenizer, model_max_length=2048):
 
 class HaluEvalSumTask(Task):
     DATASET_NAME = "halu_eval_sum"
-    DEFAULT_FILE_PATH = "/root/dataset/summarization_data.json"
+    DEFAULT_FILE_PATH = "/path/to/summarization_data.json"
 
     def __init__(self, file_path=None):
         """
@@ -85,6 +85,7 @@ class HaluEvalSumTask(Task):
 
     def _format_docs(self, tokenizer, max_doc_length=2048):
         formatted_docs = []
+        adv=False
 
         for idx, item in tqdm(enumerate(self.data), desc="Formatting documents", total=len(self.data), unit="doc", miniters=1):
             try:
@@ -119,6 +120,10 @@ class HaluEvalSumTask(Task):
                     "choices": [" Yes", " No"],
                     "gold": 1 # Hallucinated summary is the second choice ("No")
                 })
+                if adv:
+                    formatted_docs[-2]["gold"] = 1
+                    formatted_docs[-1]["gold"] = 0
+
             except Exception as e:
                 print(f"Error processing document {idx}: {e}")
                 continue
@@ -179,9 +184,7 @@ class HaluEvalSumTask(Task):
         """
         docs = self._format_docs(tokenizer)
         
-        self.tokenizer = tokenizer  # Store tokenizer for truncation logic
-        #docs = self.test_docs() if split == "test" else self.training_docs()
-
+        self.tokenizer = tokenizer  
 
         return create_dataloader(
             tokenizer,

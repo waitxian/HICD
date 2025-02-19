@@ -53,6 +53,10 @@ Then, replace or add the contents in the `models` and `tasks` folders from the `
 python main.py --model llama  --model_args pretrained=/path/models/Llama-7b  --tasks hellaswag --head_importance_calc --save_importance_path path/to/0shot_hellaswag_ac.pkl --num_fewshot 0
 ```
 
+You may need to modify the dataset path in [task].py.
+
+`tasks[options]`: race, openbookqa, truthfulqa_mc, factor, halu_eval_sum
+
 By setting `adv=True` in `tasks/hellaswag.py`, you can regenerate the erroneous samples and rerun the process to obtain the `0shot_hellaswag_ac.pkl` file.Similar implementations for constructing erroneous samples can be applied to other tasks as well.
 
 ```

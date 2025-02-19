@@ -37,11 +37,14 @@ class each:
 class RACE(Task):
     VERSION = 1
     DATASET_PATH = "race"
-    DATASET_NAME = "high"
+    DATASET_NAME = "middle"
 
     cache = {}
-    letter_to_num = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
-    #letter_to_num = {'A': 1, 'B': 2, 'C': 3, 'D': 0}
+    adv =False
+    if adv==False:
+        letter_to_num = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+    else:
+        letter_to_num = {'A': 1, 'B': 2, 'C': 3, 'D': 0}
 
     def has_training_docs(self):
         return True
@@ -57,7 +60,6 @@ class RACE(Task):
             return self.cache[set]
         r = collections.defaultdict(list)
         res = []
-        #for item in datasets.load_dataset(path='/root/dataset/race', name=self.DATASET_NAME)[set]:
         for item in datasets.load_dataset(path=self.DATASET_PATH, name=self.DATASET_NAME)[set]:
             res.append({
                 'article': item['article'],

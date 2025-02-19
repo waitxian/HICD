@@ -143,28 +143,7 @@ class TruthfulQAMultipleChoice(Task):
             "mc1": True,
             "mc2": True
         }
-    '''
-    def doc_to_cont(self, doc):
-        """
-        Returns the correct answer content for both MC1 and MC2.
-
-        Args:
-            doc (dict): A document from the dataset.
-
-        Returns:
-            tuple: Correct answers for MC1 and MC2.
-        """
-        # Extract correct choice for MC1
-        mc1_index = doc["mc1_targets"]["labels"].index(1)
-        mc1_correct = doc["mc1_targets"]["choices"][mc1_index]
-
-        # Extract correct choices for MC2
-        mc2_correct = [
-            choice for choice, label in zip(doc["mc2_targets"]["choices"], doc["mc2_targets"]["labels"]) if label == 1
-        ]
-
-        return mc1_correct, mc2_correct
-    '''
+   
     def doc_to_cont(self, doc):
         """
         Returns the correct answer content for MC1.

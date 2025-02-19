@@ -57,15 +57,22 @@ class OpenBookQA(MultipleChoiceTask):
             "id": doc["id"],
             "query": doc["fact1"]+'\n'+doc["question_stem"]+'\nAnswer:',
             "choices": doc["choices"]["text"],
-            "gold": ["A","B", "C", "D"].index(doc["answerKey"].strip()),
+            "gold": ["A", "B", "C", "D"].index(doc["answerKey"].strip()),
         }
         return out_doc
 
     def get_dataloader(self, tokenizer, split = 'train', subset_size = None, batch_size = 1, num_fewshot = 0):
-        split ='test'
+        split ='test'  
         docs = self.training_docs() if split == 'train' else self.validation_docs() if split == 'validation' else self.test_docs()
-        import ipdb
-        ipdb.set_trace()
+        
+        adv=False
+        # Adversarial modification of the gold label
+        if adv==True:
+            for idx in range(len(docs)):
+                original_gold = docs[idx]['gold']
+                new_gold = (original_gold + 1) % 4  # Rotate to the next answer
+                docs[idx]['gold'] = new_gold
+        
         return create_dataloader(tokenizer, docs, self.fewshot_context, self.doc_to_cont, subset_size = subset_size, batch_size = batch_size, num_fewshot = num_fewshot)
     
     def doc_to_cont(self, doc):

@@ -51,7 +51,6 @@ class HellaSwag(MultipleChoiceTask):
         if self._validation_docs is None:
             self._validation_docs = list(map(self._process_doc, self.dataset["validation"]))
         return self._validation_docs
-        #return map(self._process_doc, self.dataset["validation"]) 
 
     def _process_doc(self, doc):
         ctx = doc["ctx_a"] + " " + doc["ctx_b"].capitalize()
