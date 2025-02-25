@@ -68,7 +68,7 @@ def load_race(data_path=None,name='middle', pondering=None, keys_path=None):
             }
         else:
             formatted_item = {
-                "prefix": 'Article: '+context+'\n\n'+'Question: '+question+'\n'+'Answer: ',,
+                "prefix": 'Article: '+context+'\n\n'+'Question: '+question+'\n'+'Answer: ',
                 "completion": options[label],  
                 "contradiction_0": contradictions[0],
                 "contradiction_1": contradictions[1],
