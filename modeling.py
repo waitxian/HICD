@@ -95,7 +95,6 @@ class HICD:
             
             alphas = list(map(float, alphas.split(',')))
             for alpha in alphas:
-                print(alpha)
                 amplified_probs = [
                     softmax(gen_prob + alpha * (gen_prob - induce_prob),dim=-1)
                     for gen_prob, induce_prob in zip(gen_probs, induce_probs)
