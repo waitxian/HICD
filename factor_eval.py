@@ -14,7 +14,7 @@ import argparse
 import ssl
 import urllib.request
 
-from modeling1 import HICD
+from modeling import HICD
 import ipdb
 import json
 import copy
