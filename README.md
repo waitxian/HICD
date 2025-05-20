@@ -89,6 +89,19 @@ You can add these parameters and delete `--file_path`  in the `[task]_eval.sh` f
 
 You can add these parameters in the `[task]_eval.sh` file to specify and run the task.
 
+**Citation**
+
+If you find this project helpful, please consider citing our work:
+
+```
+@article{jiang2025hicd,
+  title={HICD: Hallucination-Inducing via Attention Dispersion for Contrastive Decoding to Mitigate Hallucinations in Large Language Models},
+  author={Jiang, Xinyan and Ye, Hang and Zhu, Yongxin and Zheng, Xiaoying and Chen, Zikang and Gong, Jun},
+  journal={arXiv preprint arXiv:2503.12908},
+  year={2025}
+}
+```
+
 
 
 
